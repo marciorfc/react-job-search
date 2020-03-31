@@ -26,12 +26,26 @@ async function fetchGithub() {
         //console.log('page', onPage);
     }
     console.log('got', allJobs.length, 'jobs total');
+
+    //filtr
+    const srJobs = allJobs.filter(job => {
+        const jobTitle = job.title.toLowerCase();
+
+        if (jobTitle.includes("junior") ||
+            jobTitle.includes("manager")) {
+                return false;
+        }
+        return true;
+    });
+
+    console.log('Filtered jobs to', srJobs.length);
+
     const success = await setAsync('github', JSON.stringify(allJobs));
 
     console.log({success});
     
 }
 
-fetchGithub();
+//fetchGithub();
 
 module.exports = fetchGithub;
